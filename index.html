@@ -1,87 +1,76 @@
-<h1>PãoDeAlhoCom_Arroz</h1>
-<style>
-  h1{
-    font-family: monospace;
-    text-align: center;
-    color: gold;
-  }
-</style>
-<p>A melhor base da Galáxia de <b>Euclides.</b></p>
-<style>
-  h2{
-    font-family: serif;
-    font-size: 16px;
-    color: aliceblue;
-    text-indent: 10px;
-    text-align: center;
-    text-wrap:balance;
-  }
+077<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Desenhador profisinal 5000</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #f0f0f0; }
+    canvas { border: 1px solid #333; margin-top: 10px; }
+    .controls { margin-top: 20px; }
+    input[type="range"] { width: 150px; }
+  </style>
+</head>
+<body>
+  <h1>🖌️ Mini Photoshop</h1>
+  <input type="file" id="upload" accept="image/*"><br>
+  <canvas id="canvas" width="600" height="400"></canvas>
 
-</style>
-<h2>Em um planeta distante, onde os céus são tingidos de tons esverdeados e a atmosfera exala um aroma terroso, encontra-se a Base Espacial <a style="color: rgb(17, 245, 112);">PãoDeAlhoCom_Arroz</a>. Este posto avançado intergaláctico foi habilmente construído sobre as margens de um Lago próximos aos abundantes cogumelos presentes por lá. A base abriga grandes exploradores e aventureiros.</h2>
-<p></p>
-<p>Imagem de exemplo do Planeta onde se localiza a base.</p>
-<small><a style="color: aquamarine;">Cebola é azeda</a></small>
-<p></p>
-<img src="Planeta.png" alt="Não é a foto do planeta real" width="560" height="560">
-<p></p>
-<h2>A base é composta por uma série de corredores transparentes, cubóides e pré fabricados feitos de um material resistente as fortes tempestades, não muito frequentes no planeta, ma atingem a temperatuda de 110,2C. Esses corredores perfeitamente com o ambiente circundante, permitindo que os ocupantes observem as estrelas e os fungos luminosos à noite.</h2>
-<p></p>
-<h2>planeta misterioso, várias criaturas foram descobertas. Existe um ser maior que um Onibus, no topo de sua cabeça a grandes presas muito resistentes e pontudas direcionadas para cima, formando uma espécia de boca super poderosa. Substâncias Nitrogenadas no DNA (Adenina e Timina) e duas Bases Nitrogenadas do RNA (Uracila e Adenina) deixam a criatura com uma velocidade íncrível apesar do seu grande tamanho, seu movimento consiste em saltos pequenos e rápidos</h2>
-<p>Imagine um lugar cheio de luz e vida</p>
-<p></p>
-<h2>O planeta é repleto de uma variedade de cogumelos, alguns do tamanho de árvores, outros extremamentes pequenos. Durante a noite um espetáculo ocorre, todos os cogumelos brilham, juntamente com a grama, que brilha de acordo com o vento.</h2>
-<p></p>
-<img src="Marcela.jpg" alt="Cogumelos a noite, ambientação real do planeta." width="1500" height="1080">
-<p></p>
-<p>Mais sobre<a style="font-family: cursive; color: rgb(42, 165, 52);">Zapoti</a></p>
-<style>
-  h5{
-    background-color: rgb(53, 192, 216);
-  }
-</style>
-<h5><a href="PaginaDois.html">Criaturas</a></h5>
+  <div class="controls">
+    <label>Brilho: <input type="range" id="brightness" min="0" max="200" value="100"></label>
+    <label>Contraste: <input type="range" id="contrast" min="0" max="200" value="100"></label>
+    <label>Saturação: <input type="range" id="saturate" min="0" max="200" value="100"></label><br><br>
+    <button id="save">Salvar Imagem</button>
+  </div>
 
-<style>
-p {
-	font-family: sans-serif;
-	font-size: 15px;
-	color: ghostwhite;
-	background-color: rgb(0, 128, 111);
-}
-  body {
-    background-image: url("TexturaAzulEscuro.png");
-    background-size: 2000px;
-    padding: 10px;
-    text-align: center;
-    text-shadow: 0.1em 0.1em 0.2em black;
-    background-position: center;
-  }
-</style>
-<style>
-  h3{
-    font-family: monospace;
-    font-size: 20;
-    color: chartreuse;
-  }
-</style>
-<h3>EM DESENVOLVIMENTO</h3>
-<style>
-  h4{
-    font-family: monospace;
-    font-size: 15;
-    color: chartreuse;
-  }
-</style>
-<h4>-Unumpêntio</h4>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let img = new Image();
 
+    document.getElementById('upload').addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        img.src = evt.target.result;
+        img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      };
+      reader.readAsDataURL(file);
+    });
 
+    function applyFilters() {
+      const brightness = document.getElementById('brightness').value;
+      const contrast = document.getElementById('contrast').value;
+      const saturate = document.getElementById('saturate').value;
+      canvas.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%)`;
+    }
 
+    document.querySelectorAll('input[type="range"]').forEach(input => {
+      input.addEventListener('input', applyFilters);
+    });
 
+    // Desenho livre
+    let drawing = false;
+    canvas.addEventListener('mousedown', () => drawing = true);
+    canvas.addEventListener('mouseup', () => drawing = false);
+    canvas.addEventListener('mousemove', e => {
+      if (!drawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      ctx.fillStyle = 'red';
+      ctx.beginPath();
+      ctx.arc(x, y, 3, 0, Math.PI * 2);
+      ctx.fill();
+    });
 
-
-
-
-
-
-
+    // Salvar imagem
+    document.getElementById('save').addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'editado.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  </script>
+</body>
+</html>
