@@ -46,6 +46,7 @@
       const brightness = document.getElementById('brightness').value;
       const contrast = document.getElementById('contrast').value;
       const saturate = document.getElementById('saturate').value;
+      ctx.drawImage(bgImg, 100, 100, canvas.width, canvas.height);
       canvas.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%)`;
     }
 
@@ -62,7 +63,6 @@
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      ctx.drawImage(bgImg, 100, 100, canvas.width, canvas.height);
       ctx.fillStyle = 'red';
       ctx.beginPath();
       ctx.arc(x, y, 3, 0, Math.PI * 2);
@@ -79,6 +79,7 @@
   </script>
 </body>
 </html>
+
 
 
 
