@@ -41,12 +41,11 @@
       };
       reader.readAsDataURL(file);
     });
-
+    ctx.drawImage(bgImg, 100, 100, canvas.width, canvas.height);
     function applyFilters() {
       const brightness = document.getElementById('brightness').value;
       const contrast = document.getElementById('contrast').value;
       const saturate = document.getElementById('saturate').value;
-      ctx.drawImage(bgImg, 100, 100, canvas.width, canvas.height);
       canvas.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%)`;
     }
 
@@ -79,6 +78,7 @@
   </script>
 </body>
 </html>
+
 
 
 
