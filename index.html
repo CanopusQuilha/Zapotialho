@@ -23,9 +23,6 @@
   </div>
 
   <script>
-
-    const bgImg = new Image();
-    bgImg.src = "TexturaAzulEscuro.png";
     
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -41,7 +38,7 @@
       };
       reader.readAsDataURL(file);
     });
-    ctx.drawImage(bgImg, 100, 100, canvas.width, canvas.height);
+    
     function applyFilters() {
       const brightness = document.getElementById('brightness').value;
       const contrast = document.getElementById('contrast').value;
@@ -78,6 +75,7 @@
   </script>
 </body>
 </html>
+
 
 
 
