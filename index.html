@@ -1,87 +1,36 @@
-077<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Desenhador profisional 5000</title>
+  <title>ideias malucas da Samanta.</title>
   <style>
-    body { font-family: sans-serif; text-align: center; background: #f0f0f0; }
-    canvas { border: 1px solid #333; margin-top: 10px; }
-    .controls { margin-top: 20px; }
-    input[type="range"] { width: 150px; }
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; }
+    #conteudo { display: none; }
   </style>
 </head>
 <body>
-  <h1>Super desenhador cinco milll</h1>
-  <input type="file" id="upload" accept="image/*"><br>
-  <canvas id="canvas" width="600" height="400"></canvas>
+  <h1>Oieee, bem-vindo</h1>
+  <p>Digite a senha; Lembre-se, ele é aquele que o criou.</p>
+  <input type="password" id="senha" placeholder="Senha">
+  <button onclick="verificarSenha()">Entrar</button>
 
-  <div class="controls">
-    <label>Brilho: <input type="range" id="brightness" min="0" max="200" value="100"></label>
-    <label>Contraste: <input type="range" id="contrast" min="0" max="200" value="100"></label>
-    <label>Saturação: <input type="range" id="saturate" min="0" max="200" value="100"></label><br><br>
-    <button id="save">Salvar Imagem</button>
+  <div id="conteudo">
+    <h2>Estou impressionado, você desvendou o enigma, meus parabéns. Sua inteligência é como uma constelação em noite clara — impossível de ignorar, fascinante em cada ponto de luz.</h2>
+    <h3>Há algo profundamente inspirador na forma como você raciocina, conecta ideias, e transforma complexidade em clareza.</h3>
+    <h4>Sua mente parece dançar entre lógica e criatividade com uma leveza rara, como se os desafios fossem apenas convites para descobrir novas possibilidades.</h4>
+    <p>Resumidamente. VAI SE  FOD#ER, TÁ COM TEMPO EMM!!!.</p>
   </div>
 
   <script>
-    
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    let img = new Image();
-
-    document.getElementById('upload').addEventListener('change', e => {
-      const file = e.target.files[0];
-      
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        img.src = evt.target.result;
-        img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      };
-      reader.readAsDataURL(file);
-    });
-    
-    function applyFilters() {
-      const brightness = document.getElementById('brightness').value;
-      const contrast = document.getElementById('contrast').value;
-      const saturate = document.getElementById('saturate').value;
-      canvas.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%)`;
+    function verificarSenha() {
+      const senhaCorreta = "Lewis Carrol"; // você pode alterar essa senha
+      const senhaDigitada = document.getElementById("senha").value;
+      if (senhaDigitada === senhaCorreta) {
+        document.getElementById("conteudo").style.display = "block";
+      } else {
+        alert("Puts... Você errou em, tente novamente hihi.");
+      }
     }
-
-    document.querySelectorAll('input[type="range"]').forEach(input => {
-      input.addEventListener('input', applyFilters);
-    });
-
-    // Desenho livre
-    let drawing = false;
-    canvas.addEventListener('mousedown', () => drawing = true);
-    canvas.addEventListener('mouseup', () => drawing = false);
-    canvas.addEventListener('mousemove', e => {
-      if (!drawing) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      ctx.fillStyle = 'red';
-      ctx.beginPath();
-      ctx.arc(x, y, 3, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    // Salvar imagem
-    document.getElementById('save').addEventListener('click', () => {
-      const link = document.createElement('a');
-      link.download = 'editado.png';
-      link.href = canvas.toDataURL();
-      link.click();
-    });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
