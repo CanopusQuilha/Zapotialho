@@ -1,0 +1,88 @@
+077<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Desenhador profisional 5000</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #f0f0f0; }
+    canvas { border: 1px solid #333; margin-top: 10px; }
+    .controls { margin-top: 20px; }
+    input[type="range"] { width: 150px; }
+  </style>
+</head>
+<body>
+  <h1>Super desenhador cinco milll</h1>
+  <input type="file" id="upload" accept="image/*"><br>
+  <canvas id="canvas" width="600" height="400"></canvas>
+
+  <div class="controls">
+    <label>Brilho: <input type="range" id="brightness" min="0" max="200" value="100"></label>
+    <label>Contraste: <input type="range" id="contrast" min="0" max="200" value="100"></label>
+    <label>Saturação: <input type="range" id="saturate" min="0" max="200" value="100"></label><br><br>
+    <button id="save">Salvar Imagem</button>
+  </div>
+
+  <script>
+    
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let img = new Image();
+
+    document.getElementById('upload').addEventListener('change', e => {
+      const file = e.target.files[0];
+      
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        img.src = evt.target.result;
+        img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      };
+      reader.readAsDataURL(file);
+    });
+    
+    function applyFilters() {
+      const brightness = document.getElementById('brightness').value;
+      const contrast = document.getElementById('contrast').value;
+      const saturate = document.getElementById('saturate').value;
+      canvas.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%)`;
+    }
+
+    document.querySelectorAll('input[type="range"]').forEach(input => {
+      input.addEventListener('input', applyFilters);
+    });
+
+    // Desenho livre
+    let drawing = false;
+    canvas.addEventListener('mousedown', () => drawing = true);
+    canvas.addEventListener('mouseup', () => drawing = false);
+    canvas.addEventListener('mousemove', e => {
+      if (!drawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      ctx.fillStyle = 'red';
+      ctx.beginPath();
+      ctx.arc(x, y, 3, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Salvar imagem
+    document.getElementById('save').addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'editado.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
